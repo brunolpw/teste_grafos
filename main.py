@@ -47,7 +47,9 @@ def run():
     g.add_sugestao(s4) # id: 4 uma tReferencia (s2)
     g.add_sugestao(s5) # id: 5
 
-
+    """
+        Exemplo de grafos.
+    """
     graph = {'A' : ['B', 'C'],
              'B' : ['C', 'D'],
              'C' : ['D', 'F'],
@@ -56,17 +58,17 @@ def run():
              'F' : ['C'],
              }
 
-    print("find path")
-    print("A -> D: %s" %g.find_path(graph, 'A', 'D')) # ['A', 'B', 'C', 'D']
-    print("A -> F: %s" %g.find_path(graph, 'A', 'F')) # ['A', 'B', 'C', 'F']
+    #print("find path")
+    #print("A -> D: %s" %g.find_path(graph, 'A', 'D')) # ['A', 'B', 'C', 'D']
+    #print("A -> F: %s" %g.find_path(graph, 'A', 'F')) # ['A', 'B', 'C', 'F']
 
-    print("find all paths")
-    print("A -> D: %s" %g.find_all_paths(graph, 'A', 'D')) # [['A', 'B', 'C', 'D'], ['A', 'B', 'D'], ['A', 'C', 'D']]
-    print("A -> F: %s" %g.find_all_paths(graph, 'A', 'F')) # [['A', 'B', 'C', 'F'], ['A', 'B', 'D', 'C', 'F'], ['A', 'C', 'F']]
+    #print("find all paths")
+    #print("A -> D: %s" %g.find_all_paths(graph, 'A', 'D')) # [['A', 'B', 'C', 'D'], ['A', 'B', 'D'], ['A', 'C', 'D']]
+    #print("A -> F: %s" %g.find_all_paths(graph, 'A', 'F')) # [['A', 'B', 'C', 'F'], ['A', 'B', 'D', 'C', 'F'], ['A', 'C', 'F']]
 
-    print("find shortest path")
-    print("A -> D: %s" %g.find_shortest_path(graph, 'A', 'D')) # ['A', 'B', 'D']
-    print("A -> F: %s" %g.find_shortest_path(graph, 'A', 'F')) # ['A', 'C', 'F']
+    #print("find shortest path")
+    #print("A -> D: %s" %g.find_shortest_path(graph, 'A', 'D')) # ['A', 'B', 'D']
+    #print("A -> F: %s" %g.find_shortest_path(graph, 'A', 'F')) # ['A', 'C', 'F']
 
     #print(g.sugs)
     #print("4 -> 5: %s" %g.find_path(g.sugs, 4, 5)) # [4, 2, 5]
@@ -76,9 +78,9 @@ def run():
         #s = g.sugs[4]
     #    print(a)
     #    print(s.find_id(a))
-    s2.add_referencias(3)
-    s2.add_referencias(5)
-    s4.add_referencias(2)
+    #s2.add_referencias(3)
+    #s2.add_referencias(5)
+    #s4.add_referencias(2)
     
     b = Banco()
 
@@ -99,7 +101,7 @@ def run():
 
 #    b.insert_node_sugest(s3, s5)
 
-    print("tentando rodar cada elemento do banco.")
+    print("Todos elementos do banco.")
     b.read_path(s1)
 
 #    b.read_sugest()
@@ -143,3 +145,4 @@ def run():
 """
 if __name__ == "__main__":
     run()
+    print("\n")

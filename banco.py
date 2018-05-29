@@ -12,11 +12,12 @@ melhorar a usabilidade da aplicação.
 """
 class Banco(object):
     def __init__(self):
+        self.path = 'banco/sugestao.db'
         self.graph={}
         self.conectando()
 
     def conectando(self):
-        conn = sqlite3.connect('sugestao.db')
+        conn = sqlite3.connect(self.path)
         conn.close()
 
     def create_table(self):
@@ -40,7 +41,7 @@ class Banco(object):
         );
         """
 
-        conn = sqlite3.connect('sugestao.db')
+        conn = sqlite3.connect(self.path)
         cursor = conn.cursor()
         #sqlite3.Warning: You can only execute one statement at a time.
         cursor.execute(sql_sugestoes)
@@ -48,7 +49,7 @@ class Banco(object):
         conn.close()
 
     def insert_sugest(self, Sugestao):
-        conn = sqlite3.connect('sugestao.db')
+        conn = sqlite3.connect(self.path)
         cursor = conn.cursor()
         cursor.execute("""
         INSERT INTO sugestoes (texto, autor, itens, pontos) VALUES (?, ?, ?, ?);
@@ -57,7 +58,7 @@ class Banco(object):
         conn.close()
 
     def insert_node_sugest(self, sug1, sug2):
-        conn = sqlite3.connect('sugestao.db')
+        conn = sqlite3.connect(self.path)
         cursor = conn.cursor()
         cursor.execute("""
         INSERT INTO vertices (id_node_pai, id_node_filho) VALUES (?, ?);
@@ -66,7 +67,7 @@ class Banco(object):
         conn.close()
 
     def update_sugest(self, Sugestao, this_id):
-        conn = sqlite3.connect('sugestao.db')
+        conn = sqlite3.connect(self.path)
         cursor = conn.cursor()
         cursor.execute("""
         UPDATE sugestoes
@@ -77,7 +78,7 @@ class Banco(object):
         conn.close()
 
     def read_sugest(self):
-        conn = sqlite3.connect('sugestao.db')
+        conn = sqlite3.connect(self.path)
         cursor = conn.cursor()
         cursor.execute("""
         SELECT * FROM sugestoes;
@@ -87,7 +88,7 @@ class Banco(object):
         conn.close()
 
     def read_by_id_sugest(self, id=0):
-        conn = sqlite3.connect('sugestao.db')
+        conn = sqlite3.connect(self.path)
         cursor = conn.cursor()
         cursor.execute("""
         SELECT * FROM sugestoes WHERE id = %d;
@@ -108,7 +109,7 @@ class Banco(object):
 SELECT p.autor AS autor_pai, (SELECT q.autor FROM sugestoes AS q WHERE q.id = e.id_node_filho) AS autor_filho FROM vertices AS e, sugestoes AS p WHERE e.id_node_pai = p.id AND p.id = 2;
     """
     def read_path(self, sug):
-        conn = sqlite3.connect('sugestao.db')
+        conn = sqlite3.connect(self.path)
         cursor = conn.cursor()
         cursor.execute("""
         SELECT p.autor AS autor_pai, (
