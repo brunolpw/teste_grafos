@@ -148,15 +148,26 @@ SELECT p.autor AS autor_pai, (SELECT q.autor FROM sugestoes AS q WHERE q.id = e.
     print("new.to_string()")
     print(new.to_string())
     """
-    def create_graph(self, sug1):
+
+    def convert_data(self, data):
         sug = Sugestao()
+        sug.id     = data[0]
+        sug.texto  = data[1]
+        sug.autor  = data[2]
+        sug.itens  = data[3]
+        sug.pontos = data[4]
+        return sug
+
+    def create_graph(self, sug1):
+        #sug = Sugestao()
         aux = self.read_by_id_sugest(sug1.id)
+        sug = self.convert_data(aux)
         dict_sugs={}
-        sug.id     = aux[0]
-        sug.texto  = aux[1]
-        sug.autor  = aux[2]
-        sug.itens  = aux[3]
-        sug.pontos = aux[4]
+        #sug.id     = aux[0]
+        #sug.texto  = aux[1]
+        #sug.autor  = aux[2]
+        #sug.itens  = aux[3]
+        #sug.pontos = aux[4]
 
         #dict_sugs[sug.autor]= self.read_path(sug1)
         #return dict_sugs
