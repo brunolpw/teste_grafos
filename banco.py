@@ -159,17 +159,18 @@ SELECT p.autor AS autor_pai, (SELECT q.autor FROM sugestoes AS q WHERE q.id = e.
         return sug
 
     def create_graph(self, sug1):
-        #sug = Sugestao()
         aux = self.read_by_id_sugest(sug1.id)
         sug = self.convert_data(aux)
         dict_sugs={}
-        #sug.id     = aux[0]
-        #sug.texto  = aux[1]
-        #sug.autor  = aux[2]
-        #sug.itens  = aux[3]
-        #sug.pontos = aux[4]
-
-        #dict_sugs[sug.autor]= self.read_path(sug1)
-        #return dict_sugs
         self.graph[sug.autor] = self.read_path(sug1)
         return self.graph
+
+    def verifica_dependencias(self, sug):
+        conn = sqlite3.connect(self.path)
+        cursor = conn.cursor()
+        cursor.execute("""
+        SELECT COUNT(*) FROM vertices WHERE id_node_pai = %d;
+        """ %sug.id)
+        return cursor.fetchone()[0]
+        conn.close()
+

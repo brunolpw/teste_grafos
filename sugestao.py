@@ -20,16 +20,16 @@ class Sugestao(object):
         if self.dependencias != None:
             self.pontos = self.pontos - len(self.dependencias)
 
+    def remove_pontos(self, pontos=0):
+        self.pontos = self.pontos - pontos
+        if self.pontos <= 0:
+            self.pontos = 0
+
     def add_item(self, item=[]):
         self.itens.append(item)
 
     def add_referencias(self, ref=[]):
         self.dependencias.append(ref)
-
-    #def find_id(self, id=0):
-    #    if id == self.id:
-    #        return to_string()
-    #    return "nenhum id encontrado."
 
     def to_string(self):
         txt = ("Texto: %s\n\tpor %s\nItens: %s\nPontos: %d\n" %(self.texto, self.autor, self.itens, self.pontos))

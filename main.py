@@ -132,6 +132,7 @@ def run():
     print(b.graph)
     print("find path")
     print("autor 1 -> autor 5: %s" %g.find_path(b.graph, 'autor 1', 'autor 5')) # ['autor 1', 'autor 2', 'autor 3', 'autor 5']
+    print(b.verifica_dependencias(s2))
     #print(b.read_by_id_sugest(2))
     #for a in new_s.ref_sugestao:
     #    print(a)
