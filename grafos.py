@@ -13,10 +13,10 @@ class Grafos(object):
     def add_sugestao(self, Sugestao):
         sug = Sugestao
         self.sugs[sug.id] = []
-        if sug.ref_sugestao != None:
-            for s in range(len(sug.ref_sugestao)):
-                print("s is %s, id %d" %(sug.ref_sugestao[s].autor, sug.ref_sugestao[s].id))
-                self.sugs[sug.id].append(sug.ref_sugestao[s].id)
+        if sug.dependencias != None:
+            for s in range(len(sug.dependencias)):
+                print("s is %s, id %d" %(sug.dependencias[s].autor, sug.dependencias[s].id))
+                self.sugs[sug.id].append(sug.dependencias[s].id)
 
     def find_path(self, graph, start, end, path=[]):
         path = path + [start]

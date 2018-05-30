@@ -13,18 +13,18 @@ class Sugestao(object):
         self.autor  = autor
         self.itens  = itens
         self.pontos = pontos
-        self.ref_sugestao = []
+        self.dependencias = []
 
     def add_ponto(self, ponto=0):
         self.pontos = self.pontos + ponto
-        if self.ref_sugestao != None:
-            self.pontos = self.pontos - len(self.ref_sugestao)
+        if self.dependencias != None:
+            self.pontos = self.pontos - len(self.dependencias)
 
     def add_item(self, item=[]):
         self.itens.append(item)
 
     def add_referencias(self, ref=[]):
-        self.ref_sugestao.append(ref)
+        self.dependencias.append(ref)
 
     #def find_id(self, id=0):
     #    if id == self.id:
@@ -33,7 +33,7 @@ class Sugestao(object):
 
     def to_string(self):
         txt = ("Texto: %s\n\tpor %s\nItens: %s\nPontos: %d\n" %(self.texto, self.autor, self.itens, self.pontos))
-        if self.ref_sugestao != []:
-            for ref in range(len(self.ref_sugestao)):
-                txt = txt + ("\tReferencia: %s\n" %(self.ref_sugestao[ref].texto))
+        if self.dependencias != []:
+            for ref in range(len(self.dependencias)):
+                txt = txt + ("\tReferencia: %s\n" %(self.dependencias[ref].texto))
         return txt
