@@ -10,6 +10,7 @@ class Grafos(object):
     def __init__(self):
         self.sugs={}
 
+    """
     def add_sugestao(self, Sugestao):
         sug = Sugestao
         self.sugs[sug.id] = []
@@ -17,7 +18,8 @@ class Grafos(object):
             for s in range(len(sug.dependencias)):
                 print("s is %s, id %d" %(sug.dependencias[s].autor, sug.dependencias[s].id))
                 self.sugs[sug.id].append(sug.dependencias[s].id)
-
+    """
+    
     def find_path(self, graph, start, end, path=[]):
         path = path + [start]
         if start == end:

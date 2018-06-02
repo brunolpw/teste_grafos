@@ -133,22 +133,10 @@ SELECT p.autor AS autor_pai, (SELECT q.autor FROM sugestoes AS q WHERE q.id = e.
 #                    if new_path: return new_path
         conn.close()
         return nodes
-    """
-        Criar uma função que leia o valor individual de cada sugestão pega
-    na lista anterior, afim de que esta seja adicionada a um dicionário que
-    representará o grafo.
 
-    new = Sugestao()
-    new_s = b.read_by_id_sugest(2)
-    new.id     = new_s[0]
-    new.texto  = new_s[1]
-    new.autor  = new_s[2]
-    new.itens  = new_s[3]
-    new.pontos = new_s[4]
-    print("new.to_string()")
-    print(new.to_string())
     """
-
+        Converte os valores retornados do banco em Sugestao.
+    """
     def convert_data(self, data):
         sug = Sugestao()
         sug.id     = data[0]
@@ -158,6 +146,9 @@ SELECT p.autor AS autor_pai, (SELECT q.autor FROM sugestoes AS q WHERE q.id = e.
         sug.pontos = data[4]
         return sug
 
+    """
+        Cria um grafo com os valores retornados do banco.
+    """
     def create_graph(self, sug1):
         aux = self.read_by_id_sugest(sug1.id)
         sug = self.convert_data(aux)
@@ -165,12 +156,46 @@ SELECT p.autor AS autor_pai, (SELECT q.autor FROM sugestoes AS q WHERE q.id = e.
         self.graph[sug.autor] = self.read_path(sug1)
         return self.graph
 
+    """
+        Verifica quantas dependencias há em determinada sugestão.
+    """
     def verifica_dependencias(self, sug):
+        #aux = self.convert_data(self.read_by_id_sugest(sug.id))
         conn = sqlite3.connect(self.path)
         cursor = conn.cursor()
         cursor.execute("""
         SELECT COUNT(*) FROM vertices WHERE id_node_pai = %d;
         """ %sug.id)
-        return cursor.fetchone()[0]
+        result = cursor.fetchone()[0]
+        #aux.remove_pontos(result)
+        conn.close()
+        #self.update_sugest(aux, aux.id)
+        return result
+
+    def lista_sem_dependencias(self):
+        conn = sqlite3.connect(self.path)
+        cursor = conn.cursor()
+        cursor.execute("""
+        SELECT autor, pontos
+        FROM sugestoes
+        EXCEPT
+        SELECT s.autor, s.pontos
+        FROM sugestoes AS s
+        INNER JOIN vertices AS v ON v.id_node_pai = s.id;
+        """)
+        for linha in cursor.fetchall():
+            print(linha)
         conn.close()
 
+    def lista_com_dependencias(self):
+        conn = sqlite3.connect(self.path)
+        cursor = conn.cursor()
+        cursor.execute("""
+        SELECT DISTINCT s.autor
+        FROM sugestoes AS s
+        LEFT JOIN vertices AS v
+        WHERE s.id = v.id_node_pai;
+        """)
+        for linha in cursor.fetchall():
+            print(linha)
+        conn.close()

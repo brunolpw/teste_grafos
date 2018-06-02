@@ -141,9 +141,67 @@ def run():
 ###############################################################################
 ###############################################################################
 ###############################################################################
+def teste():
+    b = Banco()
+    g = Grafos()
+
+    """
+        Instancias
+    """
+    s1 = Sugestao(1, "Primeiro tema", "autor 1", [], 0)
+    s2 = Sugestao(2, "Segundo tema",  "autor 2", [], 0)
+    s3 = Sugestao(3, "Terceiro tema", "autor 3", [], 0)
+    s4 = Sugestao(4, "Quarto tema",   "autor 4", [], 7)
+    s5 = Sugestao(5, "Quinto tema",   "autor 5", [], 0)
+    
+    s1.add_ponto(5)
+    s2.add_ponto(7)
+    s3.add_ponto(3)
+    s4.add_ponto(2)
+    s5.add_ponto(15)
+
+    s1.add_item(['a', 'b', 'c'])
+    s2.add_item(['1', '2', '3'])
+    s3.add_item([1, 2, 3])
+    s4.add_item(['&', '%', '@'])
+    s5.add_item(['#', 'B', 3])
+
+    s1.add_item(['x', 'y', 'z'])
+
+    b.read_path(s1)
+    b.create_graph(s1)
+    b.create_graph(s2)
+    b.create_graph(s3)
+
+    print("graph")
+    print(b.graph)
+    print("\n")
+    print("find_path")
+    print("autor 1 -> autor 5: %s\n" %g.find_path(b.graph, 'autor 1', 'autor 5')) # ['autor 1', 'autor 2', 'autor 3', 'autor 5']
+    
+    print("find_all_paths")
+    print("autor 1 -> autor 5: %s\n" %g.find_all_paths(b.graph, 'autor 1', 'autor 5')) # [['autor 1', 'autor 2', 'autor 3', 'autor 5'], ['autor 1', 'autor 2', 'autor 5'], ['autor 1', 'autor 3', 'autor 5']]
+    
+    print("find_shortest_path")
+    print("autor 1 -> autor 5: %s\n" %g.find_shortest_path(b.graph, 'autor 1', 'autor 5')) # ['autor 1', 'autor 2', 'autor 5']
+    
+    print("b.verifica_dependencias(s2)")
+    print(b.verifica_dependencias(s2))
+    print("b.lista_com_dependencias()")
+    #print(b.lista_com_dependencias())
+    b.lista_com_dependencias()
+    print("b.lista_sem_dependencias()")
+    #print(b.lista_sem_dependencias())
+    b.lista_sem_dependencias()
+###############################################################################
+###############################################################################
+###############################################################################
+###############################################################################
+###############################################################################
 """
     Faz a chamada para este mesmo arquivo.
 """
 if __name__ == "__main__":
-    run()
+    #run()
+    teste()
     print("\n")
