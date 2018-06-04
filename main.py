@@ -283,7 +283,7 @@ if __name__ == "__main__":
     #teste()
     sug = Sugestao()
     s = Selecao()
-    s.seleciona(3) # default 5
+    s.seleciona(4) # default 5
     
 
     #a = sorted(s.new_sugs, key=attrgetter('pontos'))

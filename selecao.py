@@ -35,8 +35,10 @@ class Selecao(object):
         embaralhado = self.sugs
         for i in range(quantidade):
             self.new_sugs.append(embaralhado[i])
-        self.new_sugs = sorted(self.new_sugs, key=attrgetter('pontos'), reverse=True)
+        self.organizar_subdivisao()
 
+    def organizar_subdivisao(self):
+        self.new_sugs = sorted(self.new_sugs, key=attrgetter('pontos'), reverse=True)
 
     """
         Aqui será pego o melhor item dentre os selecionados, será verificado
@@ -47,9 +49,12 @@ class Selecao(object):
     def pega_melhor(self):
         sug = self.new_sugs[0]
         dependencias = self.b.verifica_dependencias(sug)
+        
         if dependencias > 0:
             sug.remove_pontos(dependencias)
             sug.add_dependencias(self.b.read_path(sug))
-            return sug.to_string()
-        return ("não tem dependencias. pontos: " + str(sug.pontos))
+            self.new_sugs[0] = sug
+            self.organizar_subdivisao()
+            sug = self.new_sugs[0]
+        return sug.to_string()
 
