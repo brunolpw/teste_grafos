@@ -25,8 +25,12 @@ class Sugestao(object):
         if self.pontos <= 0:
             self.pontos = 0
 
-    def add_item(self, item=[]):
-        self.itens.append(item)
+    def add_item(self, item):
+        if type(item) == list:
+            for i in item:
+                self.itens.append(i)
+        else:
+            self.itens.append(item)
 
     def add_referencias(self, ref=[]):
         self.dependencias.append(ref)

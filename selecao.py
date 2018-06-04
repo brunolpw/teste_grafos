@@ -38,7 +38,13 @@ class Selecao(object):
         self.new_sugs = sorted(self.new_sugs, key=attrgetter('pontos'), reverse=True)
 
 
-    
+    """
+        Aqui será pego o melhor item dentre os selecionados, será verificado
+    se há a necessidade de dependencias, se houver será listado quais são elas
+    e se pode continuar com o processo ou não, caso não seja possivel, então
+    será feita uma nova listagem.
+    """
     def pega_melhor(self):
-        pass
+        sug = self.new_sugs[0]
+        return sug
 
