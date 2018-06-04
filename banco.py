@@ -152,7 +152,7 @@ SELECT p.autor AS autor_pai, (SELECT q.autor FROM sugestoes AS q WHERE q.id = e.
     def create_graph(self, sug1):
         aux = self.read_by_id_sugest(sug1.id)
         sug = self.convert_data(aux)
-        dict_sugs={}
+        #dict_sugs={}
         self.graph[sug.autor] = self.read_path(sug1)
         return self.graph
 
@@ -176,26 +176,43 @@ SELECT p.autor AS autor_pai, (SELECT q.autor FROM sugestoes AS q WHERE q.id = e.
         conn = sqlite3.connect(self.path)
         cursor = conn.cursor()
         cursor.execute("""
-        SELECT autor, pontos
+        SELECT *
         FROM sugestoes
         EXCEPT
-        SELECT s.autor, s.pontos
+        SELECT s.*
         FROM sugestoes AS s
         INNER JOIN vertices AS v ON v.id_node_pai = s.id;
         """)
         for linha in cursor.fetchall():
-            print(linha)
+            sug = self.convert_data(linha)
+            print(sug.autor, sug.pontos)
         conn.close()
 
     def lista_com_dependencias(self):
         conn = sqlite3.connect(self.path)
         cursor = conn.cursor()
         cursor.execute("""
-        SELECT DISTINCT s.autor
+        SELECT DISTINCT s.*
         FROM sugestoes AS s
         LEFT JOIN vertices AS v
         WHERE s.id = v.id_node_pai;
         """)
         for linha in cursor.fetchall():
-            print(linha)
+            sug = self.convert_data(linha)
+            print(sug.autor)
         conn.close()
+
+    def read_all_order_by_pontos(self):
+        sug = Sugestao()
+        sugestoes = []
+        conn = sqlite3.connect(self.path)
+        cursor = conn.cursor()
+        cursor.execute("""
+        SELECT * FROM sugestoes ORDER BY pontos DESC;
+        """)
+        for linha in cursor.fetchall():
+            sug = self.convert_data(linha)
+            sugestoes.append(sug)
+            #print(linha)
+        conn.close()
+        return sugestoes
