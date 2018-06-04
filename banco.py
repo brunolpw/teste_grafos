@@ -44,6 +44,7 @@ class Banco(object):
         conn = sqlite3.connect(self.path)
         cursor = conn.cursor()
         #sqlite3.Warning: You can only execute one statement at a time.
+        # Apenas uma query por vez.
         cursor.execute(sql_sugestoes)
         cursor.execute(sql_vertices)
         conn.close()
@@ -202,11 +203,15 @@ SELECT p.autor AS autor_pai, (SELECT q.autor FROM sugestoes AS q WHERE q.id = e.
             print(sug.autor)
         conn.close()
 
+    """
+        Lista todos os itens pela ordem de sua pontuação (desprezando o valor
+    atualizado com base em suas dependencias).
+    """
     def read_all_order_by_pontos(self):
-        sug = Sugestao()
+        sug       = Sugestao()
         sugestoes = []
-        conn = sqlite3.connect(self.path)
-        cursor = conn.cursor()
+        conn      = sqlite3.connect(self.path)
+        cursor    = conn.cursor()
         cursor.execute("""
         SELECT * FROM sugestoes ORDER BY pontos DESC;
         """)

@@ -291,5 +291,4 @@ if __name__ == "__main__":
     for i in s.new_sugs:
         print(i.to_string())
     print("\nmelhor")
-    print(s.pega_melhor().to_string())
-list
+    print(s.pega_melhor())

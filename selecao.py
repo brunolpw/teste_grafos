@@ -19,8 +19,8 @@ dependencias já foram vistas anteriormente.
 """
 class Selecao(object):
     def __init__(self):
-        b = Banco()
-        self.sugs = b.read_all_order_by_pontos()
+        self.b = Banco()
+        self.sugs = self.b.read_all_order_by_pontos()
         self.new_sugs = []
     
     def embaralha(self):
@@ -46,5 +46,10 @@ class Selecao(object):
     """
     def pega_melhor(self):
         sug = self.new_sugs[0]
-        return sug
+        dependencias = self.b.verifica_dependencias(sug)
+        if dependencias > 0:
+            sug.remove_pontos(dependencias)
+            sug.add_dependencias(self.b.read_path(sug))
+            return sug.to_string()
+        return ("não tem dependencias. pontos: " + str(sug.pontos))
 

@@ -32,12 +32,16 @@ class Sugestao(object):
         else:
             self.itens.append(item)
 
-    def add_referencias(self, ref=[]):
-        self.dependencias.append(ref)
+    def add_dependencias(self, ref):
+        if type(ref) == list:
+            for i in ref:
+                self.dependencias.append(i)
+        else:
+            self.dependencias.append(ref)
 
     def to_string(self):
         txt = ("Texto: %s\n\tpor %s\nItens: %s\nPontos: %d\n" %(self.texto, self.autor, self.itens, self.pontos))
         if self.dependencias != []:
             for ref in range(len(self.dependencias)):
-                txt = txt + ("\tReferencia: %s\n" %(self.dependencias[ref].texto))
+                txt = txt + ("\tReferencia %d: %s\n" %(ref+1, self.dependencias[ref]))
         return txt
