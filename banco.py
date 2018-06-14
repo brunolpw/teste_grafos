@@ -24,9 +24,11 @@ class Banco(object):
         sql_sugestoes = """
         CREATE TABLE IF NOT EXISTS sugestoes (
             id     INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-            texto  VARCHAR(256),
             autor  VARCHAR(256),
+            titulo  VARCHAR(256),
+            texto  VARCHAR(1024),
             itens  VARCHAR(256),
+            objetivos VARCHAR(256),
             pontos INTEGER
         );
         """
@@ -41,12 +43,32 @@ class Banco(object):
         );
         """
 
+        # usar criptografia na senha.
+        sql_funcionarios = """
+        CREATE TABLE IF NOT EXISTS funcionarios (
+            id    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+            nome  VARCHAR(256),
+            senha VARCHAR(256)
+        );
+        """
+
+        sql_itens = """
+        CREATE TABLE IF NOT EXISTS itens (
+            id    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+            nome  VARCHAR(256),
+            valor INTEGER
+        );
+        """
+
         conn = sqlite3.connect(self.path)
         cursor = conn.cursor()
         #sqlite3.Warning: You can only execute one statement at a time.
         # Apenas uma query por vez.
         cursor.execute(sql_sugestoes)
         cursor.execute(sql_vertices)
+        cursor.execute(sql_funcionarios)
+        cursor.execute(sql_itens)
+        #cursor.execute(sql_funcionarios)
         conn.close()
 
     def insert_sugest(self, Sugestao):

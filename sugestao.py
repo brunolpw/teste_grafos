@@ -1,18 +1,25 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import datetime
+
 """
     Sugestão é uma classe basica para representar as opções que serão lançadas
 pelos professores e que o sistema usará para sugerir de tema para uso em sala
 de aula.
 """
 class Sugestao(object):
-    def __init__(self, id=0, texto='', autor='', itens=[], pontos=0):
-        self.id     = id
-        self.texto  = texto
-        self.autor  = autor
-        self.itens  = itens
-        self.pontos = pontos
+    def __init__(self, id=0, titulo='', texto='', autor='', itens=[], objetivos=[], pontos=0):
+        self.id           = id
+        self.titulo       = titulo
+        self.autor        = autor
+        self.data_criacao = 0
+        self.ultimo_uso   = 0
+        self.texto        = texto 
+        self.prof_atual   = ''
+        self.itens        = itens
+        self.objetivos    = objetivos
+        self.pontos       = pontos
         self.dependencias = []
 
     def add_ponto(self, ponto=0):
@@ -40,8 +47,8 @@ class Sugestao(object):
             self.dependencias.append(ref)
 
     def to_string(self):
-        txt = ("Texto: %s\n\tpor %s\nItens: %s\nPontos: %d\n" %(self.texto, self.autor, self.itens, self.pontos))
+        txt = ("titulo: %s\n\tpor %s\ndescrição: %s\nItens: %s\nPontos: %d\n" %(self.titulo, self.autor, self.texto, self.itens, self.pontos))
         if self.dependencias != []:
             for ref in range(len(self.dependencias)):
-                txt = txt + ("\tReferencia %d: %s\n" %(ref+1, self.dependencias[ref]))
+                txt = txt + ("dependencias %d: %s\n" %(ref+1, self.dependencias[ref]))
         return txt
