@@ -60,6 +60,32 @@ class Banco(object):
         );
         """
 
+        sql_alunos = """
+        CREATE TABLE IF NOT EXISTS alunos (
+            id    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+        );
+        """
+
+        sql_professores = """
+        CREATE TABLE IF NOT EXISTS professores (
+            id    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+        );
+        """
+
+        sql_turmas = """
+        CREATE TABLE IF NOT EXISTS turmas (
+            id           INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+            nivel        VARCHAR(15),
+            ano          VARCHAR(100),
+            id_tema      INTEGER,
+            id_aluno     INTEGER,
+            id_professor INTEGER,
+            FOREIGN KEY (id_tema) REFERENCES sugestoes(id),
+            FOREIGN KEY (id_aluno) REFERENCES alunos(id),
+            FOREIGN KEY (id_professor) REFERENCES professores(id)
+        );
+        """
+
         conn = sqlite3.connect(self.path)
         cursor = conn.cursor()
         #sqlite3.Warning: You can only execute one statement at a time.
@@ -68,7 +94,9 @@ class Banco(object):
         cursor.execute(sql_vertices)
         cursor.execute(sql_funcionarios)
         cursor.execute(sql_itens)
-        #cursor.execute(sql_funcionarios)
+        cursor.execute(sql_alunos)
+        cursor.execute(sql_professores)
+        cursor.execute(sql_turmas)
         conn.close()
 
     def insert_sugest(self, Sugestao):

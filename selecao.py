@@ -38,8 +38,10 @@ class Selecao(object):
     pontos acrescidos em 3.
     """
     def ajusta_pontuacao(self):
-        pass
-        
+        new_sugs = []
+        for sug in self.sugs:
+            # aplicar as regras
+            new_sugs.append(sug)
     """
         A roleta deve pegar todos os pontos de todos os elementos do banco
     de dados, já tratados para a devida turma, tendo a sua pontuação já
