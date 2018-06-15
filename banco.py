@@ -20,6 +20,10 @@ class Banco(object):
         conn = sqlite3.connect(self.path)
         conn.close()
 
+###############################################################################
+#   Area de criação de tabelas                                                #
+###############################################################################
+
     def create_table(self):
         sql_sugestoes = """
         CREATE TABLE IF NOT EXISTS sugestoes (
@@ -97,7 +101,12 @@ class Banco(object):
         cursor.execute(sql_alunos)
         cursor.execute(sql_professores)
         cursor.execute(sql_turmas)
+        
         conn.close()
+
+###############################################################################
+#   Area de inserts                                                           #
+###############################################################################
 
     def insert_sugest(self, Sugestao):
         conn = sqlite3.connect(self.path)
@@ -116,6 +125,21 @@ class Banco(object):
         """, (sug1.id, sug2.id))
         conn.commit()
         conn.close()
+    
+    def insert_funcionarios(self, funcionario):
+        pass
+    def insert_itens(self, item):
+        pass
+    def insert_alunos(self, aluno):
+        pass
+    def insert_professores(self, professor):
+        pass
+    def insert_turma(self, turma):
+        pass
+
+###############################################################################
+#   Area de updates                                                           #
+###############################################################################
 
     def update_sugest(self, Sugestao, this_id):
         conn = sqlite3.connect(self.path)
@@ -128,6 +152,9 @@ class Banco(object):
         conn.commit()
         conn.close()
 
+###############################################################################
+#   Area de retornos                                                           #
+###############################################################################
     def read_sugest(self):
         conn = sqlite3.connect(self.path)
         cursor = conn.cursor()
@@ -184,6 +211,10 @@ SELECT p.autor AS autor_pai, (SELECT q.autor FROM sugestoes AS q WHERE q.id = e.
 #                    if new_path: return new_path
         conn.close()
         return nodes
+
+###############################################################################
+#   Area de logicas                                                           #
+###############################################################################
 
     """
         Converte os valores retornados do banco em Sugestao.

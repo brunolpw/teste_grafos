@@ -5,6 +5,7 @@ from random   import randint
 from operator import attrgetter
 
 from sugestao import Sugestao
+from turma    import Turma
 from banco    import Banco
 
 """
@@ -39,6 +40,7 @@ class Selecao(object):
     """
     def ajusta_pontuacao(self):
         new_sugs = []
+        turma = Turma() # pegar histórico de anos e matérias da turma.
         for sug in self.sugs:
             # aplicar as regras
             new_sugs.append(sug)
