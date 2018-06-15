@@ -4,6 +4,8 @@
 import sqlite3
 
 from sugestao import Sugestao
+from funcionario import Funcionario
+from turma import Turma
 
 """
     Banco é uma classe que faz a chamada às funções de banco de dados, para
@@ -127,7 +129,14 @@ class Banco(object):
         conn.close()
     
     def insert_funcionarios(self, funcionario):
-        pass
+        conn = sqlite3.connect(self.path)
+        cursor = conn.cursor()
+        cursor.execute("""
+        INSERT INTO funcionarios (nome, senha) VALUES (?, ?);
+        """, (funcionario.nome, funcionario.senha))
+        conn.commit()
+        conn.close()
+
     def insert_itens(self, item):
         pass
     def insert_alunos(self, aluno):
