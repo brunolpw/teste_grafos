@@ -69,12 +69,8 @@ class Banco(object):
         sql_alunos = """
         CREATE TABLE IF NOT EXISTS alunos (
             id    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-        );
-        """
-
-        sql_professores = """
-        CREATE TABLE IF NOT EXISTS professores (
-            id    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+            nome  VARCHAR(256),
+            idade INTEGER
         );
         """
 
@@ -101,7 +97,6 @@ class Banco(object):
         cursor.execute(sql_funcionarios)
         cursor.execute(sql_itens)
         cursor.execute(sql_alunos)
-        cursor.execute(sql_professores)
         cursor.execute(sql_turmas)
         
         conn.close()
@@ -138,13 +133,31 @@ class Banco(object):
         conn.close()
 
     def insert_itens(self, item):
-        pass
+        conn = sqlite3.connect(self.path)
+        cursor = conn.cursor()
+        cursor.execute("""
+        INSERT INTO itens (nome, valor) VALUES (?, ?);
+        """, (item.nome, item.valor))
+        conn.commit()
+        conn.close()
+
     def insert_alunos(self, aluno):
-        pass
-    def insert_professores(self, professor):
-        pass
-    def insert_turma(self, turma):
-        pass
+        conn = sqlite3.connect(self.path)
+        cursor = conn.cursor()
+        cursor.execute("""
+        INSERT INTO alunos (nome, idade) VALUES (?, ?);
+        """, (aluno.nome, aluno.idade))
+        conn.commit()
+        conn.close()
+
+    def insert_turmas(self, turma):
+        conn = sqlite3.connect(self.path)
+        cursor = conn.cursor()
+        cursor.execute("""
+        INSERT INTO turmas (nivel, ano, id_tema, id_aluno, id_professor) VALUES (?, ?, ?, ?, ?);
+        """, (turma.nivel, turma.ano, turma.id_tema, turma.id_aluno, turma.id_professor))
+        conn.commit()
+        conn.close()
 
 ###############################################################################
 #   Area de updates                                                           #
