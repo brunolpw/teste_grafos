@@ -39,16 +39,6 @@ class Banco(object):
         );
         """
 
-        sql_vertices = """
-        CREATE TABLE IF NOT EXISTS vertices (
-            id            INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-            id_node_pai   INTEGER,
-            id_node_filho INTEGER,
-            FOREIGN KEY (id_node_pai)   REFERENCES sugestoes(id),
-            FOREIGN KEY (id_node_filho) REFERENCES sugestoes(id)
-        );
-        """
-
         # usar criptografia na senha.
         sql_funcionarios = """
         CREATE TABLE IF NOT EXISTS funcionarios (
@@ -81,6 +71,18 @@ class Banco(object):
             ano          VARCHAR(100)
         );
         """
+        #######################################################################
+        # Tabelas de relações                                                 #
+        #######################################################################
+        sql_vertices = """
+        CREATE TABLE IF NOT EXISTS vertices (
+            id            INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+            id_node_pai   INTEGER,
+            id_node_filho INTEGER,
+            FOREIGN KEY (id_node_pai)   REFERENCES sugestoes(id),
+            FOREIGN KEY (id_node_filho) REFERENCES sugestoes(id)
+        );
+        """
 
         sql_relacao_turma = """
         CREATE TABLE IF NOT EXISTS relacao_turmas (
@@ -96,17 +98,29 @@ class Banco(object):
         );
         """
 
+        sql_itens_sugestoes = """
+        CREATE TABLE IF NOT EXISTS itens_sugestoes (
+            id          INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+            id_sugestao INTEGER,
+            id_item     INTEGER,
+            FOREIGN KEY (id_sugestao)   REFERENCES sugestoes(id),
+            FOREIGN KEY (id_item) REFERENCES itens(id)
+        );
+        """
+
         conn = sqlite3.connect(self.path)
         cursor = conn.cursor()
         #sqlite3.Warning: You can only execute one statement at a time.
         # Apenas uma query por vez.
         cursor.execute(sql_sugestoes)
-        cursor.execute(sql_vertices)
         cursor.execute(sql_funcionarios)
         cursor.execute(sql_itens)
         cursor.execute(sql_alunos)
         cursor.execute(sql_turmas)
+
+        cursor.execute(sql_vertices)
         cursor.execute(sql_relacao_turma)
+        cursor.execute(sql_itens_sugestoes)
         
         conn.close()
 
@@ -122,15 +136,6 @@ class Banco(object):
         """, (str(Sugestao.autor), str(Sugestao.titulo), str(Sugestao.texto), str(Sugestao.itens), str(Sugestao.objetivos), Sugestao.pontos))
         #("Autor 17", "Titulo 17", "Texto 17", str([]), str([]), 17))
         
-        conn.commit()
-        conn.close()
-
-    def insert_node_sugest(self, sug1, sug2):
-        conn = sqlite3.connect(self.path)
-        cursor = conn.cursor()
-        cursor.execute("""
-        INSERT INTO vertices (id_node_pai, id_node_filho) VALUES (?, ?);
-        """, (sug1.id, sug2.id))
         conn.commit()
         conn.close()
     
@@ -170,12 +175,30 @@ class Banco(object):
         conn.commit()
         conn.close()
 
+    def insert_node_sugest(self, sug1, sug2):
+        conn = sqlite3.connect(self.path)
+        cursor = conn.cursor()
+        cursor.execute("""
+        INSERT INTO vertices (id_node_pai, id_node_filho) VALUES (?, ?);
+        """, (sug1.id, sug2.id))
+        conn.commit()
+        conn.close()
+
     def insert_relacao_turmas(self, turma, tema, professor, aluno):
         conn = sqlite3.connect(self.path)
         cursor = conn.cursor()
         cursor.execute("""
         INSERT INTO relacao_turmas (id_turma, id_tema, id_aluno, id_professor) VALUES (?, ?, ?, ?);
         """, (turma.id, tema.id, professor.id, aluno.id))
+        conn.commit()
+        conn.close()
+
+    def insert_itens_sugestoes(self, sug, item):
+        conn = sqlite3.connect(self.path)
+        cursor = conn.cursor()
+        cursor.execute("""
+        INSERT INTO itens_sugestoes (id_sugestao, id_item) VALUES (?, ?);
+        """, (sug.id, item.id))
         conn.commit()
         conn.close()
 

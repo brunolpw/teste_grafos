@@ -283,6 +283,7 @@ def inserindo_dados_no_banco():
 # inserindo registros no banco.
     print("Criando tabelas...")
     b.create_table()
+
     print("Tabelas criadas.")
     print("Inserindo dados em 'sugestoes'...")
     b.insert_sugest(s1)
@@ -374,19 +375,79 @@ def inserindo_dados_no_banco():
     b.insert_relacao_turmas(t4, s3, f3, a3)
     b.insert_relacao_turmas(t4, s3, f3, a5)
     print("Dados inseridos.")
+    print("Inserindo dados em 'insert_itens_sugestoes'...")
+# sugestões = 1~15
+# itens = 1~10
+    b.insert_itens_sugestoes(s1, i1)
+    b.insert_itens_sugestoes(s1, i2)
+    b.insert_itens_sugestoes(s1, i3)
+    b.insert_itens_sugestoes(s1, i4)
+    b.insert_itens_sugestoes(s1, i5)
+    b.insert_itens_sugestoes(s1, i6)
+    b.insert_itens_sugestoes(s1, i7)
+
+    b.insert_itens_sugestoes(s2, i8)
+    b.insert_itens_sugestoes(s2, i9)
+    b.insert_itens_sugestoes(s2, i10)
+
+    b.insert_itens_sugestoes(s3, i1)
+    b.insert_itens_sugestoes(s3, i3)
+    b.insert_itens_sugestoes(s3, i5)
+    b.insert_itens_sugestoes(s3, i7)
+    b.insert_itens_sugestoes(s3, i9)
+
+    b.insert_itens_sugestoes(s4, i2)
+    b.insert_itens_sugestoes(s4, i4)
+    b.insert_itens_sugestoes(s4, i6)
+    b.insert_itens_sugestoes(s4, i8)
+    b.insert_itens_sugestoes(s4, i10)
+
+    b.insert_itens_sugestoes(s5, i1)
+    b.insert_itens_sugestoes(s5, i4)
+    b.insert_itens_sugestoes(s5, i7)
+
+    b.insert_itens_sugestoes(s6, i1)
+
+    b.insert_itens_sugestoes(s7, i3)
+    b.insert_itens_sugestoes(s7, i5)
+    b.insert_itens_sugestoes(s7, i7)
+
+    b.insert_itens_sugestoes(s8, i10)
+
+    b.insert_itens_sugestoes(s9, i1)
+    b.insert_itens_sugestoes(s9, i10)
+
+    b.insert_itens_sugestoes(s10, i10)
+
+    b.insert_itens_sugestoes(s11, i1)
+    b.insert_itens_sugestoes(s11, i2)
+    b.insert_itens_sugestoes(s11, i3)
+
+    b.insert_itens_sugestoes(s12, i4)
+    b.insert_itens_sugestoes(s12, i5)
+    b.insert_itens_sugestoes(s12, i6)
+
+    b.insert_itens_sugestoes(s13, i5)
+    b.insert_itens_sugestoes(s13, i6)
+    b.insert_itens_sugestoes(s13, i7)
+
+    b.insert_itens_sugestoes(s14, i4)
+    b.insert_itens_sugestoes(s14, i7)
+    b.insert_itens_sugestoes(s14, i9)
+
+    b.insert_itens_sugestoes(s15, i1)
+    b.insert_itens_sugestoes(s15, i2)
+    b.insert_itens_sugestoes(s15, i3)
+    b.insert_itens_sugestoes(s15, i4)
+    b.insert_itens_sugestoes(s15, i5)
+    print("Dados inseridos.")
     print("Tudo pronto.")
 
 def projeto():
     #inserindo_dados_no_banco()
-    #b = Banco()
-    #sugs = b.read_all_order_by_pontos()
-
-    #for s in sugs:
-    #    print(s.to_string())
-    #sug = s1 = Sugestao(1,"autor 1", "Titulo 1", "Tema 1", [], [], 10)
-    #print(sug.pontos)
     s = Selecao()
     print(s.roleta())
+
 ###############################################################################
 ###############################################################################
 ###############################################################################
