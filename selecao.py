@@ -54,19 +54,11 @@ class Selecao(object):
     mais "fracos".
     """
     def roleta(self):
-        valores = []
-        total   = 0
-        for item in self.sugs:
-            print(item.pontos)
-            valores.append(item.pontos)
-            total += item.pontos
+        total   = self.b.read_sum_pontos_from_sugestoes()
         sorteio = randint(0, total)
         posicao = -1
-        print("valores: %s" %valores)
-        print("total: %d" %total)
-        print("sorteio: %d" %sorteio)
         while sorteio > 0:
             posicao = posicao + 1
-            sorteio = sorteio - valores[posicao]
+            sorteio = sorteio - self.sugs[posicao].pontos
         return self.sugs[posicao].to_string()
 

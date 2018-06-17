@@ -378,6 +378,13 @@ def inserindo_dados_no_banco():
 
 def projeto():
     #inserindo_dados_no_banco()
+    #b = Banco()
+    #sugs = b.read_all_order_by_pontos()
+
+    #for s in sugs:
+    #    print(s.to_string())
+    #sug = s1 = Sugestao(1,"autor 1", "Titulo 1", "Tema 1", [], [], 10)
+    #print(sug.pontos)
     s = Selecao()
     print(s.roleta())
 ###############################################################################

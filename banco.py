@@ -252,11 +252,13 @@ SELECT p.autor AS autor_pai, (SELECT q.autor FROM sugestoes AS q WHERE q.id = e.
     """
     def convert_data(self, data):
         sug = Sugestao()
-        sug.id     = data[0]
-        sug.texto  = data[1]
-        sug.autor  = data[2]
-        sug.itens  = data[3]
-        sug.pontos = data[4]
+        sug.id        = data[0]
+        sug.autor     = data[1]
+        sug.titulo    = data[2]
+        sug.texto     = data[3]
+        sug.itens     = data[4]
+        sug.objetivos = data[5]
+        sug.pontos    = data[6]
         return sug
 
     """
@@ -333,3 +335,16 @@ SELECT p.autor AS autor_pai, (SELECT q.autor FROM sugestoes AS q WHERE q.id = e.
             #print(linha)
         conn.close()
         return sugestoes
+
+    """
+        Retorna a soma de pontos de todas as sugestões do banco.
+    """
+    def read_sum_pontos_from_sugestoes(self):
+        conn      = sqlite3.connect(self.path)
+        cursor    = conn.cursor()
+        cursor.execute("""
+        SELECT sum(pontos) FROM sugestoes;
+        """)
+        sum_sugs = cursor.fetchone()
+        conn.close()
+        return sum_sugs[0]
