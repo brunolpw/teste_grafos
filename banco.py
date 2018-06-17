@@ -78,10 +78,18 @@ class Banco(object):
         CREATE TABLE IF NOT EXISTS turmas (
             id           INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
             nivel        VARCHAR(15),
-            ano          VARCHAR(100),
+            ano          VARCHAR(100)
+        );
+        """
+
+        sql_relacao_turma = """
+        CREATE TABLE IF NOT EXISTS relacao_turmas (
+            id           INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+            id_turma     INTEGER,
             id_tema      INTEGER,
             id_aluno     INTEGER,
             id_professor INTEGER,
+            FOREIGN KEY (id_tema) REFERENCES turmas(id),
             FOREIGN KEY (id_tema) REFERENCES sugestoes(id),
             FOREIGN KEY (id_aluno) REFERENCES alunos(id),
             FOREIGN KEY (id_professor) REFERENCES professores(id)
@@ -98,6 +106,7 @@ class Banco(object):
         cursor.execute(sql_itens)
         cursor.execute(sql_alunos)
         cursor.execute(sql_turmas)
+        cursor.execute(sql_relacao_turma)
         
         conn.close()
 
@@ -109,8 +118,10 @@ class Banco(object):
         conn = sqlite3.connect(self.path)
         cursor = conn.cursor()
         cursor.execute("""
-        INSERT INTO sugestoes (texto, autor, itens, pontos) VALUES (?, ?, ?, ?);
-        """, (Sugestao.texto, Sugestao.autor, str(Sugestao.itens), Sugestao.pontos))
+        INSERT INTO sugestoes (autor, titulo, texto, itens, objetivos, pontos) VALUES (?, ?, ?, ?, ?, ?);
+        """, (str(Sugestao.autor), str(Sugestao.titulo), str(Sugestao.texto), str(Sugestao.itens), str(Sugestao.objetivos), Sugestao.pontos))
+        #("Autor 17", "Titulo 17", "Texto 17", str([]), str([]), 17))
+        
         conn.commit()
         conn.close()
 
@@ -154,8 +165,17 @@ class Banco(object):
         conn = sqlite3.connect(self.path)
         cursor = conn.cursor()
         cursor.execute("""
-        INSERT INTO turmas (nivel, ano, id_tema, id_aluno, id_professor) VALUES (?, ?, ?, ?, ?);
-        """, (turma.nivel, turma.ano, turma.id_tema, turma.id_aluno, turma.id_professor))
+        INSERT INTO turmas (nivel, ano) VALUES (?, ?);
+        """, (turma.nivel, turma.ano))
+        conn.commit()
+        conn.close()
+
+    def insert_relacao_turmas(self, turma, tema, professor, aluno):
+        conn = sqlite3.connect(self.path)
+        cursor = conn.cursor()
+        cursor.execute("""
+        INSERT INTO relacao_turmas (id_turma, id_tema, id_aluno, id_professor) VALUES (?, ?, ?, ?);
+        """, (turma.id, tema.id, professor.id, aluno.id))
         conn.commit()
         conn.close()
 
@@ -194,7 +214,6 @@ class Banco(object):
         SELECT * FROM sugestoes WHERE id = %d;
         """ %id)
         for linha in cursor.fetchall():
-            #print(linha)
             return linha
         conn.close()
     """
@@ -219,18 +238,8 @@ SELECT p.autor AS autor_pai, (SELECT q.autor FROM sugestoes AS q WHERE q.id = e.
         WHERE e.id_node_pai = p.id AND p.id = %d;
         """ %sug.id)
         nodes = []
-        #path = []
         for linha in cursor.fetchall():
-            #print(linha)
-            #list(linha)
-
             nodes.append(linha[1])
-            #' '.join(linha)
-#            for node in nodes:
-#                print("Node: %s" %node)
-#                if node not in path:
-#                    new_path = self.read_path(node)
-#                    if new_path: return new_path
         conn.close()
         return nodes
 

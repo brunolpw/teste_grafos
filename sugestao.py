@@ -9,17 +9,17 @@ pelos professores e que o sistema usará para sugerir de tema para uso em sala
 de aula.
 """
 class Sugestao(object):
-    def __init__(self, id=0, titulo='', texto='', autor='', itens=[], objetivos=[], pontos=0):
+    def __init__(self, id=0, autor='', titulo='', texto='', itens=[], objetivos=[], pontos=0):
         self.id           = id
-        self.titulo       = titulo
         self.autor        = autor
-        self.data_criacao = 0
-        self.ultimo_uso   = 0
-        self.texto        = texto 
-        self.prof_atual   = ''
+        self.titulo       = titulo
+        self.texto        = texto
         self.itens        = itens
         self.objetivos    = objetivos
         self.pontos       = pontos
+        self.data_criacao = 0
+        self.ultimo_uso   = 0 
+        self.prof_atual   = ''
         self.dependencias = []
 
     def add_ponto(self, ponto=0):

@@ -1,10 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from sugestao import Sugestao
-from grafos   import Grafos
-from banco    import Banco
-from selecao  import Selecao
+from sugestao    import Sugestao
+from item        import Item
+from aluno       import Aluno
+from funcionario import Funcionario
+from turma       import Turma
+from grafos      import Grafos
+from banco       import Banco
+from selecao     import Selecao
 
 """
     Rodando o sistema.
@@ -86,22 +90,7 @@ def run():
     
     b = Banco()
 
-#    b.create_table() # texto, autor, itens, pontos
-#    print("\n\n")
-#    b.insert_sugest(s1)
-#    b.insert_sugest(s2)
-#    b.insert_sugest(s3)
-#    b.insert_sugest(s4)
-#    b.insert_sugest(s5)
 
-#    b.insert_node_sugest(s1, s2)
-#    b.insert_node_sugest(s1, s3)
-
-#    b.insert_node_sugest(s2, s3)
-#    b.insert_node_sugest(s2, s4)
-#    b.insert_node_sugest(s2, s5)
-
-#    b.insert_node_sugest(s3, s5)
 
     print("Todos elementos do banco.")
     b.read_path(s1)
@@ -114,18 +103,7 @@ def run():
 #    s_aux.pontos = 15
 #    b.update_sugest(s_aux, 2)
 #    b.read_by_id_sugest(2)
-    
-    """
-    new = Sugestao()
-    new_s = b.read_by_id_sugest(2)
-    new.id     = new_s[0]
-    new.texto  = new_s[1]
-    new.autor  = new_s[2]
-    new.itens  = new_s[3]
-    new.pontos = new_s[4]
-    print("new.to_string()")
-    print(new.to_string())
-    """
+
     b.create_graph(s1)
     b.create_graph(s2)
     b.create_graph(s3)
@@ -166,30 +144,6 @@ def teste():
     s13 = Sugestao(13, "Decimo Terceiro tema", "autor 13", [], 0)
     s14 = Sugestao(14, "Decimo Quarto tema",   "autor 14", [], 0)
     s15 = Sugestao(15, "Decimo Quinto tema",   "autor 15", [], 0)
-    
-    #b.insert_sugest(s6)
-    #b.insert_sugest(s7)
-    #b.insert_sugest(s8)
-    #b.insert_sugest(s9)
-    #b.insert_sugest(s10)
-    #b.insert_sugest(s11)
-    #b.insert_sugest(s12)
-    #b.insert_sugest(s13)
-    #b.insert_sugest(s14)
-    #b.insert_sugest(s15)
-
-    #b.insert_node_sugest(s7, s4)
-    #b.insert_node_sugest(s7, s5)
-    #b.insert_node_sugest(s7, s6)
-
-    #b.insert_node_sugest(s11, s7)
-    #b.insert_node_sugest(s11, s8)
-
-    #b.insert_node_sugest(s13, s1)
-    #b.insert_node_sugest(s13, s2)
-    #b.insert_node_sugest(s13, s3)
-    #b.insert_node_sugest(s13, s4)
-    #b.insert_node_sugest(s13, s5)
 
     s1.add_ponto(5)
     s2.add_ponto(7)
@@ -275,12 +229,155 @@ def teste():
 ###############################################################################
 ###############################################################################
 ###############################################################################
-def bancos():
+def inserindo_dados_no_banco():
     b = Banco()
-    b.create_table()
 
+# criando registros.
+    s1 = Sugestao(1,"autor 1", "Titulo 1", "Tema 1", [], [], 10)
+    s2 = Sugestao(2,"autor 2", "Titulo 2", "Tema 2", [], [],  7)
+    s3 = Sugestao(3,"autor 3", "Titulo 3", "Tema 3", [], [], 20)
+    s4 = Sugestao(4,"autor 4", "Titulo 4", "Tema 4", [], [], 30)
+    s5 = Sugestao(5,"autor 5", "Titulo 5", "Tema 5", [], [], 25)
+
+    s6  = Sugestao(6, "autor 6",  "Titulo 6",  "Tema 6",  [], [], 18)
+    s7  = Sugestao(7, "autor 7",  "Titulo 7",  "Tema 7",  [], [],  5)
+    s8  = Sugestao(8, "autor 8",  "Titulo 8",  "Tema 8",  [], [],  3)
+    s9  = Sugestao(9, "autor 9",  "Titulo 9",  "Tema 9",  [], [], 11)
+    s10 = Sugestao(10,"autor 10", "Titulo 10", "Tema 10", [], [], 42)
+
+    s11 = Sugestao(11,"autor 11", "Titulo 11", "Tema 11", [], [], 15)
+    s12 = Sugestao(12,"autor 12", "Titulo 12", "Tema 12", [], [], 35)
+    s13 = Sugestao(13,"autor 13", "Titulo 13", "Tema 13", [], [], 13)
+    s14 = Sugestao(14,"autor 14", "Titulo 14", "Tema 14", [], [], 15)
+    s15 = Sugestao(15,"autor 15", "Titulo 15", "Tema 15", [], [],  8)
     
+    i1 = Item(1, "item 1",  "5")
+    i2 = Item(2, "item 2",  "9")
+    i3 = Item(3, "item 3",  "4")
+    i4 = Item(4, "item 4", "12")
+    i5 = Item(5, "item 5",  "2")
+    
+    i6  = Item(6,  "item 6",   "8")
+    i7  = Item(7,  "item 7",  "42")
+    i8  = Item(8,  "item 8",   "3")
+    i9  = Item(9,  "item 9",   "7")
+    i10 = Item(10, "item 10", "15")
+
+    a1 = Aluno(1, "aluno 1", 2)
+    a2 = Aluno(2, "aluno 2", 2)
+    a3 = Aluno(3, "aluno 3", 3)
+    a4 = Aluno(4, "aluno 4", 3)
+    a5 = Aluno(5, "aluno 5", 1)
+
+    f1 = Funcionario(1, "funcionario 1", "funcionario 1")
+    f2 = Funcionario(2, "funcionario 2", "funcionario 2")
+    f3 = Funcionario(3, "funcionario 3", "funcionario 3")
+    f4 = Funcionario(4, "funcionario 4", "funcionario 4")
+    f5 = Funcionario(5, "funcionario 5", "funcionario 5")
+
+    t1 = Turma(1, "nivel 1", "2018")
+    t2 = Turma(2, "nivel 2", "2018")
+    t3 = Turma(3, "nivel 3", "2018")
+    t4 = Turma(4, "nivel 4", "2018")
+
+# inserindo registros no banco.
+    print("Criando tabelas...")
+    b.create_table()
+    print("Tabelas criadas.")
+    print("Inserindo dados em 'sugestoes'...")
+    b.insert_sugest(s1)
+    b.insert_sugest(s2)
+    b.insert_sugest(s3)
+    b.insert_sugest(s4)
+    b.insert_sugest(s5)
+    b.insert_sugest(s6)
+    b.insert_sugest(s7)
+    b.insert_sugest(s8)
+    b.insert_sugest(s9)
+    b.insert_sugest(s10)
+    b.insert_sugest(s11)
+    b.insert_sugest(s12)
+    b.insert_sugest(s13)
+    b.insert_sugest(s14)
+    b.insert_sugest(s15)
+    print("Dados inseridos.")
+    print("Inserindo dados em 'vertices'...")
+# Criar ar relações de s1
+    b.insert_node_sugest(s1, s2)
+    b.insert_node_sugest(s1, s3)
+# Criar ar relações de s2
+    b.insert_node_sugest(s2, s3)
+    b.insert_node_sugest(s2, s4)
+    b.insert_node_sugest(s2, s5)
+# Criar ar relações de s3
+    b.insert_node_sugest(s3, s5)
+# Criar ar relações de s7
+    b.insert_node_sugest(s7, s4)
+    b.insert_node_sugest(s7, s5)
+    b.insert_node_sugest(s7, s6)
+# Criar ar relações de s11
+    b.insert_node_sugest(s11, s7)
+    b.insert_node_sugest(s11, s8)
+# Criar ar relações de s13
+    b.insert_node_sugest(s13, s1)
+    b.insert_node_sugest(s13, s2)
+    b.insert_node_sugest(s13, s3)
+    b.insert_node_sugest(s13, s4)
+    b.insert_node_sugest(s13, s5)
+    print("Dados inseridos.")
+    print("Inserindo dados em 'itens'...")
+    b.insert_itens(i1)
+    b.insert_itens(i2)
+    b.insert_itens(i3)
+    b.insert_itens(i4)
+    b.insert_itens(i5)
+    b.insert_itens(i6)
+    b.insert_itens(i7)
+    b.insert_itens(i8)
+    b.insert_itens(i9)
+    b.insert_itens(i10)
+    print("Dados inseridos.")
+    print("Inserindo dados em 'alunos'...")
+    b.insert_alunos(a1)
+    b.insert_alunos(a2)
+    b.insert_alunos(a3)
+    b.insert_alunos(a4)
+    b.insert_alunos(a5)
+    print("Dados inseridos.")
+    print("Inserindo dados em 'funcionarios'...")
+    b.insert_funcionarios(f1)
+    b.insert_funcionarios(f2)
+    b.insert_funcionarios(f3)
+    b.insert_funcionarios(f4)
+    b.insert_funcionarios(f5)
+    print("Dados inseridos.")
+    print("Inserindo dados em 'turmas'...")
+    b.insert_turmas(t1)
+    b.insert_turmas(t2)
+    b.insert_turmas(t3)
+    b.insert_turmas(t4)
+    print("Dados inseridos.")
+    print("Inserindo dados em 'relacao_turmas'...")
+    b.insert_relacao_turmas(t1, s1, f1, a1)
+    b.insert_relacao_turmas(t1, s1, f1, a2)
+    b.insert_relacao_turmas(t1, s1, f1, a3)
+
+    b.insert_relacao_turmas(t2, s5, f2, a5)
+    b.insert_relacao_turmas(t2, s5, f2, a4)
+    b.insert_relacao_turmas(t2, s5, f2, a3)
+
+    b.insert_relacao_turmas(t3, s7, f5, a2)
+    b.insert_relacao_turmas(t3, s7, f5, a4)
+    b.insert_relacao_turmas(t3, s7, f5, a5)
+
+    b.insert_relacao_turmas(t4, s3, f3, a1)
+    b.insert_relacao_turmas(t4, s3, f3, a3)
+    b.insert_relacao_turmas(t4, s3, f3, a5)
+    print("Dados inseridos.")
+    print("Tudo pronto.")
+
 def projeto():
+    #inserindo_dados_no_banco()
     s = Selecao()
     print(s.roleta())
 ###############################################################################

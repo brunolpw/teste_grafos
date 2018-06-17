@@ -57,13 +57,14 @@ class Selecao(object):
         valores = []
         total   = 0
         for item in self.sugs:
+            print(item.pontos)
             valores.append(item.pontos)
             total += item.pontos
         sorteio = randint(0, total)
         posicao = -1
-        #print("valores: %s" %valores)
-        #print("total: %d" %total)
-        #print("sorteio: %d" %sorteio)
+        print("valores: %s" %valores)
+        print("total: %d" %total)
+        print("sorteio: %d" %sorteio)
         while sorteio > 0:
             posicao = posicao + 1
             sorteio = sorteio - valores[posicao]
