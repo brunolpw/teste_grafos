@@ -3,9 +3,11 @@
 
 import sqlite3
 
-from sugestao import Sugestao
+from sugestao    import Sugestao
 from funcionario import Funcionario
-from turma import Turma
+from item        import Item
+from turma       import Turma
+from aluno       import Aluno
 
 """
     Banco é uma classe que faz a chamada às funções de banco de dados, para
@@ -266,6 +268,53 @@ SELECT p.autor AS autor_pai, (SELECT q.autor FROM sugestoes AS q WHERE q.id = e.
         conn.close()
         return nodes
 
+    """
+        Lista todos os itens pela ordem de sua pontuação (desprezando o valor
+    atualizado com base em suas dependencias).
+    """
+    def read_all_order_by_pontos(self):
+        sug       = Sugestao()
+        sugestoes = []
+        conn      = sqlite3.connect(self.path)
+        cursor    = conn.cursor()
+        cursor.execute("""
+        SELECT * FROM sugestoes ORDER BY pontos DESC;
+        """)
+        for linha in cursor.fetchall():
+            sug = self.convert_data_sugestoes(linha)
+            sugestoes.append(sug)
+            #print(linha)
+        conn.close()
+        return sugestoes
+
+    """
+        Retorna a soma de pontos de todas as sugestões do banco.
+    """
+    def read_sum_pontos_from_sugestoes(self):
+        conn      = sqlite3.connect(self.path)
+        cursor    = conn.cursor()
+        cursor.execute("""
+        SELECT sum(pontos) FROM sugestoes;
+        """)
+        sum_sugs = cursor.fetchone()[0]
+        conn.close()
+        return sum_sugs
+
+    def read_itens_from_sugestoes(self, sug):
+        item   = Item()
+        itens  = []
+        conn   = sqlite3.connect(self.path)
+        cursor = conn.cursor()
+        cursor.execute("""
+        SELECT * FROM sugestoes ORDER BY pontos DESC;
+        """)
+        for linha in cursor.fetchall():
+            item = self.convert_data_itens(linha)
+            itens.append(item)
+            #print(linha)
+        conn.close()
+        return itens
+
 ###############################################################################
 #   Area de logicas                                                           #
 ###############################################################################
@@ -273,7 +322,7 @@ SELECT p.autor AS autor_pai, (SELECT q.autor FROM sugestoes AS q WHERE q.id = e.
     """
         Converte os valores retornados do banco em Sugestao.
     """
-    def convert_data(self, data):
+    def convert_data_sugestoes(self, data):
         sug = Sugestao()
         sug.id        = data[0]
         sug.autor     = data[1]
@@ -283,13 +332,20 @@ SELECT p.autor AS autor_pai, (SELECT q.autor FROM sugestoes AS q WHERE q.id = e.
         sug.objetivos = data[5]
         sug.pontos    = data[6]
         return sug
+    
+    def convert_data_itens(self, data):
+        item = Item()
+        item.id        = data[0]
+        item.nome     = data[1]
+        item.valor    = data[2]
+        return item
 
     """
         Cria um grafo com os valores retornados do banco.
     """
     def create_graph(self, sug1):
         aux = self.read_by_id_sugest(sug1.id)
-        sug = self.convert_data(aux)
+        sug = self.convert_data_sugestoes(aux)
         #dict_sugs={}
         self.graph[sug.autor] = self.read_path(sug1)
         return self.graph
@@ -322,7 +378,7 @@ SELECT p.autor AS autor_pai, (SELECT q.autor FROM sugestoes AS q WHERE q.id = e.
         INNER JOIN vertices AS v ON v.id_node_pai = s.id;
         """)
         for linha in cursor.fetchall():
-            sug = self.convert_data(linha)
+            sug = self.convert_data_sugestoes(linha)
             print(sug.autor, sug.pontos)
         conn.close()
 
@@ -336,38 +392,8 @@ SELECT p.autor AS autor_pai, (SELECT q.autor FROM sugestoes AS q WHERE q.id = e.
         WHERE s.id = v.id_node_pai;
         """)
         for linha in cursor.fetchall():
-            sug = self.convert_data(linha)
+            sug = self.convert_data_sugestoes(linha)
             print(sug.autor)
         conn.close()
 
-    """
-        Lista todos os itens pela ordem de sua pontuação (desprezando o valor
-    atualizado com base em suas dependencias).
-    """
-    def read_all_order_by_pontos(self):
-        sug       = Sugestao()
-        sugestoes = []
-        conn      = sqlite3.connect(self.path)
-        cursor    = conn.cursor()
-        cursor.execute("""
-        SELECT * FROM sugestoes ORDER BY pontos DESC;
-        """)
-        for linha in cursor.fetchall():
-            sug = self.convert_data(linha)
-            sugestoes.append(sug)
-            #print(linha)
-        conn.close()
-        return sugestoes
 
-    """
-        Retorna a soma de pontos de todas as sugestões do banco.
-    """
-    def read_sum_pontos_from_sugestoes(self):
-        conn      = sqlite3.connect(self.path)
-        cursor    = conn.cursor()
-        cursor.execute("""
-        SELECT sum(pontos) FROM sugestoes;
-        """)
-        sum_sugs = cursor.fetchone()
-        conn.close()
-        return sum_sugs[0]
