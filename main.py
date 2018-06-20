@@ -457,7 +457,9 @@ def projeto():
     Faz a chamada para este mesmo arquivo.
 """
 if __name__ == "__main__":
-    projeto()
+
+    for i in range(9):
+        projeto()
     #run()
     #teste()
     #"""
