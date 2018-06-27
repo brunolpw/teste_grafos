@@ -50,11 +50,12 @@ class Sugestao(object):
             self.dependencias.append(ref)
 
     def to_string(self):
-        txt = ("titulo: %s\n\tpor %s\ndescrição: %s\nPontos: %d\n" %(self.titulo, self.autor, self.texto, self.pontos))
+        txt = ("titulo: %s\n\tpor %s\ndescrição: %s\n" %(self.titulo, self.autor, self.texto))
         if self.itens != []:
             for ref in range(len(self.itens)):
-                txt = txt + ("Item %d: %s ~ R$ %d\n" %(ref+1, self.itens[ref]['nome'], self.itens[ref]['valor']))
+                txt = txt + ("\tItem %d: %s ~ R$ %d\n" %(ref+1, self.itens[ref]['nome'], self.itens[ref]['valor']))
         if self.dependencias != []:
             for ref in range(len(self.dependencias)):
-                txt = txt + ("Dependencia %d: %s\n" %(ref+1, self.dependencias[ref]))
+                txt = txt + ("\tDependencia %d: %s\n" %(ref+1, self.dependencias[ref]))
+        txt = txt + ("Pontos: %d" %self.pontos)
         return txt
