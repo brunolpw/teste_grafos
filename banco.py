@@ -300,14 +300,23 @@ SELECT p.autor AS autor_pai, (SELECT q.autor FROM sugestoes AS q WHERE q.id = e.
         conn.close()
         return sum_sugs
 
+    """
+        Retorna todas as sugestões ordenadas pela pontuação.
+    """
     def read_itens_from_sugestoes(self, sug):
         item   = Item()
         itens  = []
         conn   = sqlite3.connect(self.path)
         cursor = conn.cursor()
         cursor.execute("""
-        SELECT * FROM sugestoes ORDER BY pontos DESC;
-        """)
+        SELECT DISTINCT i.id, i.nome, i.valor
+        FROM itens_sugestoes AS r,
+             sugestoes AS s,
+             itens AS i
+        WHERE r.id_sugestao = s.id
+            AND r.id_item = i.id
+            AND s.id = %d;
+        """ %sug.id)
         for linha in cursor.fetchall():
             item = self.convert_data_itens(linha)
             itens.append(item)
@@ -315,6 +324,8 @@ SELECT p.autor AS autor_pai, (SELECT q.autor FROM sugestoes AS q WHERE q.id = e.
         conn.close()
         return itens
 
+    """
+    """
     def read_valor_itens_sugestao(self, id):
         conn   = sqlite3.connect(self.path)
         cursor = conn.cursor()
@@ -329,6 +340,8 @@ SELECT p.autor AS autor_pai, (SELECT q.autor FROM sugestoes AS q WHERE q.id = e.
         conn.close()
         return sum_itens
 
+    """
+    """
     def read_sugestoes_from_turmas(self):
         ids = []
         conn   = sqlite3.connect(self.path)
@@ -363,7 +376,7 @@ SELECT p.autor AS autor_pai, (SELECT q.autor FROM sugestoes AS q WHERE q.id = e.
     
     def convert_data_itens(self, data):
         item = Item()
-        item.id        = data[0]
+        item.id       = data[0]
         item.nome     = data[1]
         item.valor    = data[2]
         return item
