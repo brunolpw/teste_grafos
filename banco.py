@@ -249,6 +249,10 @@ class Banco(object):
 
 SELECT p.autor AS autor_pai, (SELECT q.autor FROM sugestoes AS q WHERE q.id = e.id_node_filho) AS autor_filho FROM vertices AS e, sugestoes AS p WHERE e.id_node_pai = p.id AND p.id = 2;
     """
+
+    """
+        Retorna todas as dependencias de um determinado
+    """
     def read_path(self, sug):
         conn = sqlite3.connect(self.path)
         cursor = conn.cursor()
@@ -266,8 +270,8 @@ SELECT p.autor AS autor_pai, (SELECT q.autor FROM sugestoes AS q WHERE q.id = e.
         return nodes
 
     """
-        Lista todos os itens pela ordem de sua pontuação (desprezando o valor
-    atualizado com base em suas dependencias).
+        Lista todos os itens pela ordem de sua pontuação (desprezando o
+    valor atualizado com base em suas dependencias).
     """
     def read_all_order_by_pontos(self):
         sug       = Sugestao()
@@ -322,6 +326,8 @@ SELECT p.autor AS autor_pai, (SELECT q.autor FROM sugestoes AS q WHERE q.id = e.
         return itens
 
     """
+        Retorna a soma de valores de todos os itens listados em uma
+    sugestão de projeto, tendo como parametro o seu ID.
     """
     def read_valor_itens_sugestao(self, id):
         conn   = sqlite3.connect(self.path)
@@ -338,6 +344,7 @@ SELECT p.autor AS autor_pai, (SELECT q.autor FROM sugestoes AS q WHERE q.id = e.
         return sum_itens
 
     """
+        Retorna os IDs de todas as sugestões usadas nas turmas.
     """
     def read_sugestoes_from_turmas(self):
         ids = []

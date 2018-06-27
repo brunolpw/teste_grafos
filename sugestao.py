@@ -37,10 +37,9 @@ class Sugestao(object):
     def add_itens(self, ref):
         if type(ref) == list:
             for i in ref:
-                #self.itens.append(i.to_string())
-                self.itens.append({'nome':i.nome, 'valor':i.valor})
+                self.itens.append(i)
         else:
-            self.itens.append(ref.to_string())
+            self.itens.append(ref)
 
     def add_dependencias(self, ref):
         if type(ref) == list:
@@ -50,12 +49,14 @@ class Sugestao(object):
             self.dependencias.append(ref)
 
     def to_string(self):
-        txt = ("titulo: %s\n\tpor %s\ndescrição: %s\n" %(self.titulo, self.autor, self.texto))
+        txt = ("Titulo: %s\n\tpor %s\nDescrição: %s\n" %(self.titulo, self.autor, self.texto))
         if self.itens != []:
+            txt = txt + ("Itens:\n")
             for ref in range(len(self.itens)):
-                txt = txt + ("\tItem %d: %s ~ R$ %d\n" %(ref+1, self.itens[ref]['nome'], self.itens[ref]['valor']))
+                txt = txt + ("\t%d - %s ~ R$ %d\n" %(ref+1, self.itens[ref].nome, self.itens[ref].valor))
         if self.dependencias != []:
+            txt = txt + ("Dependencias:\n")
             for ref in range(len(self.dependencias)):
-                txt = txt + ("\tDependencia %d: %s\n" %(ref+1, self.dependencias[ref]))
+                txt = txt + ("\t%d - %s\n" %(ref+1, self.dependencias[ref]))
         txt = txt + ("Pontos: %d" %self.pontos)
         return txt

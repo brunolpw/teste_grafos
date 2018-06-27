@@ -49,7 +49,9 @@ class Selecao(object):
         for sug in self.sugs:
             # aplicar as regras
             itens = self.b.read_itens_from_sugestoes(sug)
+            dependencias = self.b.read_path(sug)
             sug.add_itens(itens)
+            sug.add_dependencias(dependencias)
             new_sugs.append(sug)
         return new_sugs
 
@@ -73,6 +75,8 @@ class Selecao(object):
             sorteio = sorteio - self.sugs[posicao].pontos
 
         itens = self.b.read_itens_from_sugestoes(self.sugs[posicao])
+        dependencias = self.b.read_path(self.sugs[posicao])
         self.sugs[posicao].add_itens(itens)
+        self.sugs[posicao].add_dependencias(dependencias)
         return self.sugs[posicao].to_string()
 

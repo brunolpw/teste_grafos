@@ -449,7 +449,7 @@ def projeto():
     #inserindo_dados_no_banco()
     s = Selecao()
     print(s.roleta())
-    print(s.ajusta_pontuacao())
+    #print(s.ajusta_pontuacao())
 
 ###############################################################################
 ###############################################################################
