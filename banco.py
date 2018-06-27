@@ -35,8 +35,6 @@ class Banco(object):
             autor  VARCHAR(256),
             titulo  VARCHAR(256),
             texto  VARCHAR(1024),
-            itens  VARCHAR(256),
-            objetivos VARCHAR(256),
             pontos INTEGER
         );
         """
@@ -134,10 +132,9 @@ class Banco(object):
         conn = sqlite3.connect(self.path)
         cursor = conn.cursor()
         cursor.execute("""
-        INSERT INTO sugestoes (autor, titulo, texto, itens, objetivos, pontos) VALUES (?, ?, ?, ?, ?, ?);
-        """, (str(Sugestao.autor), str(Sugestao.titulo), str(Sugestao.texto), str(Sugestao.itens), str(Sugestao.objetivos), Sugestao.pontos))
-        #("Autor 17", "Titulo 17", "Texto 17", str([]), str([]), 17))
-        
+        INSERT INTO sugestoes (autor, titulo, texto, pontos)
+        VALUES (?, ?, ?, ?);
+        """, (str(Sugestao.autor), str(Sugestao.titulo), str(Sugestao.texto), Sugestao.pontos))
         conn.commit()
         conn.close()
     
@@ -369,9 +366,9 @@ SELECT p.autor AS autor_pai, (SELECT q.autor FROM sugestoes AS q WHERE q.id = e.
         sug.autor     = data[1]
         sug.titulo    = data[2]
         sug.texto     = data[3]
-        sug.itens     = data[4]
-        sug.objetivos = data[5]
-        sug.pontos    = data[6]
+        #sug.itens     = data[4]
+        #sug.objetivos = data[5]
+        sug.pontos    = data[4]
         return sug
     
     def convert_data_itens(self, data):

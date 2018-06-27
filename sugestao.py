@@ -3,6 +3,8 @@
 
 import datetime
 
+from item import Item
+
 """
     Sugestão é uma classe basica para representar as opções que serão lançadas
 pelos professores e que o sistema usará para sugerir de tema para uso em sala
@@ -35,9 +37,11 @@ class Sugestao(object):
     def add_itens(self, ref):
         if type(ref) == list:
             for i in ref:
-                self.itens.append(i)
+                #i = Item()
+                self.itens.append(i.to_string())
         else:
-            self.itens.append(ref)
+            #ref = Item()
+            self.itens.append(ref.to_string())
 
     def add_dependencias(self, ref):
         if type(ref) == list:
@@ -51,7 +55,6 @@ class Sugestao(object):
         if self.itens != []:
             for ref in range(len(self.itens)):
                 txt = txt + ("Item %d: %s\n" %(ref+1, self.itens[ref]))
-                
         if self.dependencias != []:
             for ref in range(len(self.dependencias)):
                 txt = txt + ("Dependencia %d: %s\n" %(ref+1, self.dependencias[ref]))

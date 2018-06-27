@@ -67,10 +67,6 @@ class Selecao(object):
             sorteio = sorteio - self.sugs[posicao].pontos
 
         itens = self.b.read_itens_from_sugestoes(self.sugs[posicao])
-        for i in itens:
-            print(i.to_string())
-        print()
-        #self.sugs[posicao].add_itens(['1', 2, 'c'])
-        #self.sugs[posicao].add_itens(7)
+        self.sugs[posicao].add_itens(itens)
         return self.sugs[posicao].to_string()
 

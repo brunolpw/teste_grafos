@@ -239,10 +239,10 @@ def inserindo_dados_no_banco():
     s4 = Sugestao(4,"autor 4", "Titulo 4", "Tema 4", 30)
     s5 = Sugestao(5,"autor 5", "Titulo 5", "Tema 5", 25)
 
-    s6  = Sugestao(6, "autor 6",  "Titulo 6",  "Tema 6",   18)
-    s7  = Sugestao(7, "autor 7",  "Titulo 7",  "Tema 7",    5)
-    s8  = Sugestao(8, "autor 8",  "Titulo 8",  "Tema 8",    3)
-    s9  = Sugestao(9, "autor 9",  "Titulo 9",  "Tema 9",   11)
+    s6  = Sugestao(6, "autor 6",  "Titulo 6",  "Tema 6",  18)
+    s7  = Sugestao(7, "autor 7",  "Titulo 7",  "Tema 7",   5)
+    s8  = Sugestao(8, "autor 8",  "Titulo 8",  "Tema 8",   3)
+    s9  = Sugestao(9, "autor 9",  "Titulo 9",  "Tema 9",  11)
     s10 = Sugestao(10,"autor 10", "Titulo 10", "Tema 10", 42)
 
     s11 = Sugestao(11,"autor 11", "Titulo 11", "Tema 11", 15)
@@ -302,6 +302,7 @@ def inserindo_dados_no_banco():
     b.insert_sugest(s14)
     b.insert_sugest(s15)
     print("Dados inseridos.")
+    
     print("Inserindo dados em 'vertices'...")
 # Criar ar relações de s1
     b.insert_node_sugest(s1, s2)
@@ -441,6 +442,7 @@ def inserindo_dados_no_banco():
     b.insert_itens_sugestoes(s15, i4)
     b.insert_itens_sugestoes(s15, i5)
     print("Dados inseridos.")
+    
     print("Tudo pronto.")
 
 def projeto():
