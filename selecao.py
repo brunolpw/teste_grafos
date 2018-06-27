@@ -40,10 +40,15 @@ class Selecao(object):
     """
     def ajusta_pontuacao(self):
         new_sugs = []
+        valores  = []
+        media    = 0
         turma = Turma() # pegar histórico de anos e matérias da turma.
-        for sug in self.sugs:
+        for t in self.b.read_sugestoes_from_turmas():
+            valores.append(self.b.read_valor_itens_sugestao(t))
+        media = sum(valores)//len(valores)
+        #for sug in self.sugs:
             # aplicar as regras
-            new_sugs.append(sug)
+            #new_sugs.append(sug)
     """
         A roleta deve pegar todos os pontos de todos os elementos do banco
     de dados, já tratados para a devida turma, tendo a sua pontuação já

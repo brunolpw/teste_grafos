@@ -315,6 +315,34 @@ SELECT p.autor AS autor_pai, (SELECT q.autor FROM sugestoes AS q WHERE q.id = e.
         conn.close()
         return itens
 
+    def read_valor_itens_sugestao(self, id):
+        conn   = sqlite3.connect(self.path)
+        cursor = conn.cursor()
+        cursor.execute("""
+        SELECT SUM(distinct i.valor)
+        FROM itens_sugestoes AS r, itens AS i, sugestoes AS s
+        WHERE r.id_sugestao = s.id
+            AND i.id = r.id_item
+            AND s.id = %d;
+        """ %id)
+        sum_itens = cursor.fetchone()[0]
+        conn.close()
+        return sum_itens
+
+    def read_sugestoes_from_turmas(self):
+        ids = []
+        conn   = sqlite3.connect(self.path)
+        cursor = conn.cursor()
+        cursor.execute("""
+        SELECT DISTINCT s.id
+        FROM relacao_turmas AS r, turmas AS t, sugestoes AS s
+        WHERE r.id_turma = t.id AND r.id_tema = s.id;
+        """)
+        for linha in cursor.fetchall():
+            ids.append(linha[0])
+        conn.close()
+        return ids
+
 ###############################################################################
 #   Area de logicas                                                           #
 ###############################################################################

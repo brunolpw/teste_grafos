@@ -447,6 +447,7 @@ def projeto():
     #inserindo_dados_no_banco()
     s = Selecao()
     print(s.roleta())
+    print(s.ajusta_pontuacao())
 
 ###############################################################################
 ###############################################################################
@@ -458,8 +459,9 @@ def projeto():
 """
 if __name__ == "__main__":
 
-    for i in range(9):
-        projeto()
+    #for i in range(9):
+    projeto()
+    
     #run()
     #teste()
     #"""
